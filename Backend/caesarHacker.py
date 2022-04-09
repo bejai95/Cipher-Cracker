@@ -1,10 +1,7 @@
 # This program will decode a Caesar Cipher
-# It uses some code from https://inventwithpython.com/hacking/chapter7.html
+# It uses some code/ideas from https://inventwithpython.com/hacking/chapter7.html
 
-from email import message
 from detectEnglish import isEnglish
-
-CYPHERTEXT = "GUVF VF ZL FRPERG ZRFFNTR." # TODO: Delete this later
 
 UPPER_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' # Later put these somwehere else?
 LOWER_ALPHABET = UPPER_ALPHABET.lower()
@@ -35,17 +32,4 @@ def caesarHacker(cipherText):
                 "key": potentialKey
             }
     
-    return {
-        "error": "Something went wrong :("
-    }
-    
-def main():
-    try:
-        plainText = caesarHacker(CYPHERTEXT)["plainText"]
-        print(plainText)
-    except:
-        error = caesarHacker(CYPHERTEXT)["error"]
-        print(error)
-
-if __name__ == '__main__':
-    main()
+    raise Exception("Something went wrong :(")

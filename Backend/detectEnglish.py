@@ -1,5 +1,5 @@
 # This program detects whether a given string is English based on the percentage of its words which are in the English dictionary
-# It uses some code from https://inventwithpython.com/hacking/chapter12.html
+# It uses some code/ideas from https://inventwithpython.com/hacking/chapter12.html
 
 THRESHOLD_PERCENTAGE = 60
 UPPERLETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
