@@ -9,7 +9,7 @@ NUM_LETTTERS_IN_ALPHABET = 26
 
 def caesarHacker(cipherText):
     for potentialKey in range(NUM_LETTTERS_IN_ALPHABET):
-        potentialString = ''
+        potentialString = [] # Apprarently it is more efficient in python to build strings like this
 
         for character in cipherText:
             if character in UPPER_ALPHABET or character in LOWER_ALPHABET: # Don't decrypt non-alphabetical characters
@@ -17,15 +17,17 @@ def caesarHacker(cipherText):
                 if character in UPPER_ALPHABET:
                     originalPosition = UPPER_ALPHABET.find(character)
                     newPosition = (originalPosition - potentialKey) % 26
-                    potentialString = potentialString + UPPER_ALPHABET[newPosition]
+                    potentialString.append(UPPER_ALPHABET[newPosition])
                 else:
                     originalPosition = LOWER_ALPHABET.find(character)
                     newPosition = (originalPosition - potentialKey) % 26
-                    potentialString = potentialString + LOWER_ALPHABET[newPosition]
+                    potentialString.append(LOWER_ALPHABET[newPosition])
             
             else:
-                potentialString = potentialString + character
+                potentialString.append(character)
         
+        potentialString = ''.join(potentialString)
+
         if isEnglish(potentialString):
             return {
                 "plainText": potentialString,

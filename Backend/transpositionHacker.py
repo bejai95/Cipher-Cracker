@@ -38,5 +38,3 @@ def decrypt(cipherText, key):
             currentRow += 1
 
     return ''.join(grid)
-
-
