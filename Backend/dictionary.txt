@@ -1618,7 +1618,6 @@ Aztecan's
 Aztecs
 Aztlan
 Aztlan's
-B
 B's
 BA
 BA's
@@ -3233,7 +3232,6 @@ Byzantine's
 Byzantines
 Byzantium
 Byzantium's
-C
 C's
 CA
 CAD
@@ -5014,7 +5012,6 @@ Czechoslovakians
 Czechs
 Czerny
 Czerny's
-D
 D's
 DA
 DA's
@@ -5937,7 +5934,6 @@ Dzerzhinsky
 Dzerzhinsky's
 Dzungaria
 Dzungaria's
-E
 E's
 EC
 ECG
@@ -6663,7 +6659,6 @@ Ezekiel
 Ezekiel's
 Ezra
 Ezra's
-F
 F's
 FAA
 FAQ
@@ -7285,7 +7280,6 @@ Fuzhou
 Fuzhou's
 Fuzzbuster
 Fuzzbuster's
-G
 G'day
 G's
 GA
@@ -8227,7 +8221,6 @@ Gympie's
 Gypsies
 Gypsy
 Gypsy's
-H
 H's
 HBO
 HBO's
@@ -9708,7 +9701,6 @@ Izod
 Izod's
 Izvestia
 Izvestia's
-J
 J's
 JCS
 JD
@@ -10298,7 +10290,6 @@ Jutland
 Jutland's
 Juvenal
 Juvenal's
-K
 K's
 KB
 KB's
@@ -11012,7 +11003,6 @@ Kyrgyzstan
 Kyrgyzstan's
 Kyushu
 Kyushu's
-L
 L'Amour
 L'Amour's
 L'Enfant
@@ -12062,7 +12052,6 @@ Lysistrata
 Lysistrata's
 Lysol
 Lysol's
-M
 M's
 MA
 MA's
@@ -14028,7 +14017,6 @@ Mysore
 Mysore's
 Myst
 Myst's
-N
 N'Djamena
 N's
 NAACP
@@ -14687,7 +14675,6 @@ Nyasa
 Nyasa's
 Nyerere
 Nyerere's
-O
 O'Brien
 O'Brien's
 O'Casey
@@ -15139,7 +15126,6 @@ Ozymandias
 Ozymandias's
 Ozzie
 Ozzie's
-P
 P's
 PA
 PA's
@@ -16294,7 +16280,6 @@ Pythias
 Pythias's
 Python
 Python's
-Q
 QA
 QB
 QC
@@ -16381,7 +16366,6 @@ Quonset
 Quonset's
 Quran
 Quranic
-R
 R's
 RAF
 RAF's
@@ -17250,7 +17234,6 @@ Ryder
 Ryder's
 Ryukyu
 Ryukyu's
-S
 S's
 SA
 SAC
@@ -19052,7 +19035,6 @@ Szilard
 Szilard's
 Szymborska
 Szymborska's
-T
 T'ang
 T'ang's
 T's
@@ -20065,7 +20047,6 @@ Tyrone
 Tyrone's
 Tyson
 Tyson's
-U
 U's
 UAR
 UAW
@@ -20265,7 +20246,6 @@ Uzbekistan's
 Uzi
 Uzi's
 Uzis
-V
 V's
 VA
 VAT
@@ -20666,7 +20646,6 @@ Vulg
 Vulgate
 Vulgate's
 Vulgates
-W
 W's
 WA
 WAC
@@ -21272,7 +21251,6 @@ Wyoming's
 Wyomingite
 Wyomingite's
 Wyomingites
-X
 X's
 XEmacs
 XEmacs's
@@ -21329,7 +21307,6 @@ Xochipilli
 Xochipilli's
 Xuzhou
 Xuzhou's
-Y
 Y's
 YMCA
 YMCA's
@@ -21506,7 +21483,6 @@ Yvette
 Yvette's
 Yvonne
 Yvonne's
-Z
 Z's
 Zachariah
 Zachariah's
@@ -27538,7 +27514,6 @@ azimuths
 azure
 azure's
 azures
-b
 baa
 baa's
 baaed
@@ -33834,7 +33809,6 @@ byword
 byword's
 bywords
 byzantine
-c
 ca
 cab
 cab's
@@ -44293,7 +44267,6 @@ czarist
 czarist's
 czarists
 czars
-d
 d'Arezzo
 d'Arezzo's
 d'Estaing
@@ -50887,7 +50860,6 @@ dystopi
 dystopia
 dystopian
 dz
-e
 e'en
 e'er
 eBay
@@ -55049,7 +55021,6 @@ eyewash's
 eyewitness
 eyewitness's
 eyewitnesses
-f
 fMRI
 fa
 fa's
@@ -59626,7 +59597,6 @@ fuzzing
 fuzzy
 fwd
 fwy
-g
 g'day
 gab
 gab's
@@ -63105,7 +63075,6 @@ gyve's
 gyved
 gyves
 gyving
-h
 h'm
 ha
 haberdasher
@@ -71182,7 +71151,6 @@ ivory
 ivory's
 ivy
 ivy's
-j
 jab
 jab's
 jabbed
@@ -72127,7 +72095,6 @@ juxtaposing
 juxtaposition
 juxtaposition's
 juxtapositions
-k
 kHz
 kW
 kWh
@@ -72931,7 +72898,6 @@ kw
 kylie
 kylie's
 kylies
-l
 la
 la's
 lab
@@ -76150,7 +76116,6 @@ lyricists
 lyrics
 lysosomal
 lysosomes
-m
 ma
 ma'am
 ma's
@@ -81861,7 +81826,6 @@ mythology
 mythology's
 myths
 myxomatosis
-n
 naan
 naans
 nab
@@ -84107,7 +84071,6 @@ nymphomaniac's
 nymphomaniacs
 nymphos
 nymphs
-o
 o'clock
 o'er
 oaf
@@ -86705,7 +86668,6 @@ oysters
 oz
 ozone
 ozone's
-p
 pH
 pa
 pa's
@@ -95233,7 +95195,6 @@ pyx
 pyx's
 pyxes
 pzazz
-q
 qr
 qt
 qts
@@ -95742,7 +95703,6 @@ quotient's
 quotients
 quoting
 qwerty
-r
 rabbet
 rabbet's
 rabbeted
@@ -101976,7 +101936,6 @@ rutting
 rutty
 rye
 rye's
-s
 sabbath
 sabbath's
 sabbaths
@@ -114198,7 +114157,6 @@ systole
 systole's
 systoles
 systolic
-t
 ta
 tab
 tab's
@@ -119678,7 +119636,6 @@ tyro
 tyro's
 tyros
 tzatziki
-u
 ubiquitous
 ubiquitously
 ubiquity
@@ -122213,7 +122170,6 @@ uvular's
 uvulars
 uvulas
 uxorious
-v
 vac
 vacancies
 vacancy
@@ -123841,7 +123797,6 @@ vuvuzela
 vuvuzela's
 vuvuzelas
 vying
-w
 wabbit
 wabbits
 wack
@@ -126736,7 +126691,6 @@ wussies
 wussiest
 wussy
 wussy's
-x
 xenon
 xenon's
 xenophobe
@@ -126770,7 +126724,6 @@ xylophones
 xylophonist
 xylophonist's
 xylophonists
-y
 y'all
 ya
 yabber
@@ -127110,7 +127063,6 @@ yups
 yurt
 yurt's
 yurts
-z
 zac
 zac's
 zack

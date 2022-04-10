@@ -26,7 +26,7 @@ def caesarHacker(cipherText):
             else:
                 potentialString = potentialString + character
         
-        if (isEnglish(potentialString)):
+        if isEnglish(potentialString):
             return {
                 "plainText": potentialString,
                 "key": potentialKey
