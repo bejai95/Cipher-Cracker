@@ -44,21 +44,3 @@ def createAllWordPatternsFile():
     allWordPatternsFile.close()
 
     return
-
-
-
-
-
-
-
-
-
-
-
-def main():
-    createAllWordPatternsFile()
-
-if __name__ == "__main__":
-    main()
-        
-
