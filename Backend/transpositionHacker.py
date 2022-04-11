@@ -1,6 +1,6 @@
-# This program will decode a transposition cipher (using the grid method of transposition) -> Plesase see the description for this method of transposition given at the top of https://inventwithpython.com/hacking/chapter8.html
+# This program will decode a transposition cipher (using the grid method of transposition) -> Plesase see the description for this method of transposition encryption given at the top of https://inventwithpython.com/hacking/chapter8.html
 
-# It uses some code/ideas from https://inventwithpython.com/hacking/chapter9.html
+# This program uses some code/ideas from https://inventwithpython.com/hacking/chapter9.html
 
 from detectEnglish import isEnglish
 import math
