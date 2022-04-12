@@ -19,7 +19,7 @@ def getWordPattern(word):
         else:
             wordPattern.append('\'') # We want it to show the apostrophe rather than a number
 
-    return ''.join(wordPattern)
+    return '.'.join(wordPattern)
 
 def createAllWordPatternsFile():
     allWordPatterns = {}
