@@ -16,46 +16,46 @@ nonLettersSpaceOrApostrophePattern = re.compile('[^A-Z\s\']')
 
 def substitutionHacker(cipherText):
     intersectedMapping = getIntersectedMapping(cipherText)
-    print(intersectedMapping)
+
+    originalKey = {}
+    for cipherLetter in LETTERS:
+        if len(intersectedMapping[cipherLetter]) > 1:
+            originalKey[cipherLetter] = "_"
+        else:
+            originalKey[cipherLetter] = intersectedMapping[cipherLetter][0]
+    bestKey = originalKey
+
+    totalAmountPossibilities = 1
+    for key in intersectedMapping:
+        amountOfPossibilitiesForKey = len(intersectedMapping[key])
+        totalAmountPossibilities *= amountOfPossibilitiesForKey
     
+    answer = input("To solve this substitution cipher completely, would need to try " + str(totalAmountPossibilities) + " possible keys. Type 'full' to fully decipher, or leave blank to just show what has already been worked out:\n")
 
-    cipherLetters = intersectedMapping.keys()
-    values = (intersectedMapping[cipherLetter] for cipherLetter in cipherLetters)
-    possibleKeys = [dict(zip(cipherLetters, possibleKey)) for possibleKey in itertools.product(*values)]
+    if answer == "full": # We will find a new bestKey
+        cipherLetters = intersectedMapping.keys()
+        values = (intersectedMapping[cipherLetter] for cipherLetter in cipherLetters)
+        possibleKeys = [dict(zip(cipherLetters, possibleKey)) for possibleKey in itertools.product(*values)]
 
-    highestPercentageEnglish = 0
-    bestKey = {}
-    
-    for potentialKey in possibleKeys:
-        potentialKeyTranslated = {}
-        for cipherLetter in LETTERS:
-            potentialKeyTranslated[cipherLetter] = potentialKey[cipherLetter][0]
+        highestPercentageEnglish = 0
+        
+        for potentialKey in possibleKeys:
+            potentialKeyTranslated = {}
+            for cipherLetter in LETTERS:
+                potentialKeyTranslated[cipherLetter] = potentialKey[cipherLetter][0]
 
-        potentialPlainText = decrypt(cipherText, potentialKeyTranslated)
-        percentageEnglish = getPercentageEnglishWords(potentialPlainText)
+            print(potentialKeyTranslated)
+            potentialPlainText = decrypt(cipherText, potentialKeyTranslated)
+            percentageEnglish = getPercentageEnglishWords(potentialPlainText)
 
-        if percentageEnglish > highestPercentageEnglish:
-            highestPercentageEnglish = percentageEnglish
-            bestKey = potentialKeyTranslated
-    
+            if percentageEnglish > highestPercentageEnglish:
+                highestPercentageEnglish = percentageEnglish
+                bestKey = potentialKeyTranslated
+        
     return {
         "plainText": decrypt(cipherText, bestKey),
-        "key": potentialKeyTranslated
+        "key": bestKey
     }
-
-
-
-    
-    
-
-
-        
-    
-
-
-
-
-
 
 def getIntersectedMapping(cipherText):
     intersectedMapping = getBlankCipherletterMapping()
@@ -178,15 +178,18 @@ def decrypt(cipherText, key):
 
 
 def main():
-    data = substitutionHacker("""Tvs ythsl bvs npstbwrq sgsq bvrpjv tvs lwlq'b usykkm fyqb br vsyu bvs yqtfsu. Wb fyt y qr-fwq twbpybwrq twqes tvs ykusylm hqsf. Wi vs brkl bvs bupbv, tvs'l jsb erqiwuoybwrq ri vsu frutb isyut. Wi vs kwsl, tvs'l hqrf bvyb vs fytq'b fvr tvs bvrpjvb vs fyt fvwev frpkl cs ykortb yt cyl. Msb tvs ythsl bvs npstbwrq yqmfym yql fywbsl iru vwt yqtfsu.
+    data = substitutionHacker("""Pkry ldi'e npqntd n cnt kf dgidwliy. Ewne'd qwne ewy kpjyc olcpd myue eypplio wyc qwyi dwy dnlj dwy wnj fkgij ewy uycfyae xni. Dwy wnj ewkgowe ewld qnd dlxupt bleeyc enpm ki ewylc unce dliay ewyt wnj byyi ginbpy ek flij ecgy pkry plmy wycd. Bge ikq dwy wnj ek fnay ewy fnae ewne ewyt xnt wnry byyi clowe. Pkry xnt ike npqntd by n cnt kf dgidwliy. Ewne ld gipydd ewyt qycy cyfycclio ek wkq ewy dgi ani bgci.
 
-Trosbwost wb't bvs iwutb orosqb ri bvs lym bvyb eybevst mrp rii jpyul. Bvyb't fvyb Fsqlm fyt bvwqhwqj. Tvs rxsqsl vsu fwqlrf br tss iwus sqjwqst teussevwqj lrfq bvs tbussb. Fvwks bvwt fytq'b trosbvwqj eroxksbskm pqvsyul ri, wb yktr fytq'b qruoyk. Wb fyt y tpus twjq ri fvyb fyt jrwqj br vyxxsq bvyb lym. Tvs erpkl issk wb wq vsu crqst yql wb fytq'b bvs fym tvs fyqbsl bvs lym br csjwq.
+Wkq wnj dwy byyi dk qckio? Npp wyc lideliaed nij lieglelki akxupyeypt fnlpyj wyc fkc ewy flcde elxy li wyc plfy. Dwy wnj dk wynrlpt cyplyj ki bkew qwyi xnmlio jyaldlkid gu gielp ewld xkxyie nij dwy fype n dyldxla dwlfe enmy upnay li wyc dypf-akifljyiay. Lf dwy akgpj by dk akxupyeypt qckio nbkge dkxyewlio dk dlxupy nd ewld, wkq akgpj dwy xnmy jyaldlkid nbkge cynppt lxukcenie ewliod enmlio upnay li wyc plfy? Dwy qndi'e dgcy qwne dwy dwkgpj jk iyse.
 
-Xybuweh lwlq'b fyqb br jr. Bvs iyeb bvyb tvs fyt wqtwtbwqj bvsm optb jr oyls vwo fyqb br jr sgsq kstt. Vs vyl qr lstwus br oyhs toykk bykh fwbv tbuyqjsut vs frpkl qsgsu yjywq tss dptb br cs xrkwbs. Cpb tvs wqtwtbsl bvyb Xybuweh jr, yql tvs frpkl trrq iwql rpb bvyb bvwt frpkl cs bvs cwjjstb owtbyhs tvs erpkl oyhs wq bvswu uskybwrqtvwx.""")
+Ewy wynjuwkiyd qycy ki. Ewyt wnj byyi gelplhyj ki ugcukdy. Dwy akgpj wync wyc xkx typplio li ewy bnamockgij, bge akgpji'e xnmy kge ysnaept qwne ewy typplio qnd nbkge. Ewne qnd ysnaept qwt dwy wnj uge ewyx ki. Dwy miyq wyc xkx qkgpj yieyc wyc ckkx ne nit xligey, nij dwy akgpj ucyeyij ewne dwy wnji'e wyncj nit kf ewy ucyrlkgd typplio.
+
+Ewycy qnd dkxyewlio duyalnp nbkge ewld pleepy acynegcy. Jkiin akgpji'e vgley uliuklie qwne le qnd, bge dwy miyq qlew npp wyc wynce ewne le qnd ecgy. Le qndi'e n xneeyc kf lf dwy qnd oklio ek ect nij dnry le, bge n xneeyc kf wkq dwy qnd oklio ek dnry le. Dwy qyie bnam ek ewy anc ek oye n bpnimye nij qwyi dwy cyegciyj ewy acynegcy qnd okiy.
+
+Jnry qneawyj nd ewy fkcyde bgciyj gu ki ewy wlpp, kipt n fyq xlpyd fckx wyc wkgdy. Ewy anc wnj byyi wndelpt unamyj nij Xncen qnd lidljy ectlio ek ckgij gu ewy pnde kf ewy uyed. Jnry qyie ewckgow wld xyienp plde kf ewy xkde lxukcenie unuycd nij jkagxyied ewne ewyt akgpji'e pynry bywlij. Wy dakpjyj wlxdypf fkc ike wnrlio ucyuncyj ewydy byeeyc li njrniay nij wkuyj ewne wy wnj cyxyxbycyj yryctewlio ewne qnd iyyjyj. Wy akieligyj ek qnle fkc Xncen ek nuuync qlew ewy uyed, bge dwy delpp qnd ikqwycy ek by dyyi.""")
 
     print(data["plainText"])
     print(data["key"])
 
 if __name__ == "__main__":
     main()
-
