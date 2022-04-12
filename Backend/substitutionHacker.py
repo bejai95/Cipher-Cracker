@@ -3,7 +3,6 @@
 
 from wordPatternsGeneral import getWordPattern, createAllWordPatternsFile
 from detectEnglish import getPercentageEnglishWords
-
 import os, re, copy, itertools
 
 # We want to import allWordPatterns, but the allWordPatterns.py file might not exist yet
@@ -16,41 +15,13 @@ nonLettersSpaceOrApostrophePattern = re.compile('[^A-Z\s\']')
 
 def substitutionHacker(cipherText):
     intersectedMapping = getIntersectedMapping(cipherText)
-
-    originalKey = {}
-    for cipherLetter in LETTERS:
-        if len(intersectedMapping[cipherLetter]) > 1:
-            originalKey[cipherLetter] = "_"
-        else:
-            originalKey[cipherLetter] = intersectedMapping[cipherLetter][0]
-    bestKey = originalKey
-
-    totalAmountPossibilities = 1
-    for key in intersectedMapping:
-        amountOfPossibilitiesForKey = len(intersectedMapping[key])
-        totalAmountPossibilities *= amountOfPossibilitiesForKey
+    bestKey = getKeyBeforeFullDecipher(intersectedMapping)
+    totalAmountPossibilities = getTotalAmountPossibilities
     
     answer = input("To solve this substitution cipher completely, would need to try " + str(totalAmountPossibilities) + " possible keys. Type 'full' to fully decipher, or leave blank to just show what has already been worked out:\n")
 
-    if answer == "full": # We will find a new bestKey
-        cipherLetters = intersectedMapping.keys()
-        values = (intersectedMapping[cipherLetter] for cipherLetter in cipherLetters)
-        possibleKeys = [dict(zip(cipherLetters, possibleKey)) for possibleKey in itertools.product(*values)]
-
-        highestPercentageEnglish = 0
-        
-        for potentialKey in possibleKeys:
-            potentialKeyTranslated = {}
-            for cipherLetter in LETTERS:
-                potentialKeyTranslated[cipherLetter] = potentialKey[cipherLetter][0]
-
-            print(potentialKeyTranslated)
-            potentialPlainText = decrypt(cipherText, potentialKeyTranslated)
-            percentageEnglish = getPercentageEnglishWords(potentialPlainText)
-
-            if percentageEnglish > highestPercentageEnglish:
-                highestPercentageEnglish = percentageEnglish
-                bestKey = potentialKeyTranslated
+    if answer == "full":
+        bestKey = fullDecipher(cipherText, intersectedMapping)
         
     return {
         "plainText": decrypt(cipherText, bestKey),
@@ -82,7 +53,7 @@ def getIntersectedMapping(cipherText):
     # Remove any solved letters from the other lists.
     removeSolvedLettersFromMapping(intersectedMapping)
 
-    # Convert Blanks
+    # Convert Blanks => This needs to be done so that itertools.product can work it's magic
     convertBlanks(intersectedMapping)
     
     return intersectedMapping
@@ -141,25 +112,62 @@ def removeSolvedLettersFromMapping(letterMapping):
                     # If a new letter has now been solved, loop again
                     if len(letterMapping[cipherLetter]) == 1:
                         loopAgain = True
+    
     return
 
 def convertBlanks(letterMapping):
-    #listOfRemainingLetters = list(LETTERS)
-    #for cipherLetter in LETTERS:
-    #    if len(letterMapping[cipherLetter]) == 1:
-    #        listOfRemainingLetters.remove(letterMapping[cipherLetter][0])
-    
-    
     for cipherLetter in LETTERS:
         if letterMapping[cipherLetter] == []:
             letterMapping[cipherLetter] = ["_"]
     
     return
 
+def getKeyBeforeFullDecipher(intersectedMapping):
+    keyBeforeFullDecipher = {}
+    
+    for cipherLetter in LETTERS:
+        if len(intersectedMapping[cipherLetter]) > 1:
+            keyBeforeFullDecipher[cipherLetter] = "_"
+        else:
+            keyBeforeFullDecipher[cipherLetter] = intersectedMapping[cipherLetter][0]
+    
+    return keyBeforeFullDecipher
+
+def getTotalAmountPossibilities(intersectedMapping):
+    totalAmountPossibilities = 1
+    for key in intersectedMapping:
+        amountOfPossibilitiesForKey = len(intersectedMapping[key])
+        totalAmountPossibilities *= amountOfPossibilitiesForKey
+    
+    return totalAmountPossibilities
+
+def fullDecipher(cipherText, intersectedMapping):
+    
+    cipherLetters = intersectedMapping.keys()
+    values = (intersectedMapping[cipherLetter] for cipherLetter in cipherLetters)
+    combinations = [dict(zip(cipherLetters, possibleKey)) for possibleKey in itertools.product(*values)]
+
+    highestPercentageEnglish = 0
+    bestKey = {}
+        
+    for combination in combinations:
+        potentialKey = {}
+        for cipherLetter in LETTERS:
+            potentialKey[cipherLetter] = combination[cipherLetter][0]
+
+        potentialPlainText = decrypt(cipherText, potentialKey)
+        percentageEnglish = getPercentageEnglishWords(potentialPlainText)
+
+        if percentageEnglish > highestPercentageEnglish:
+            highestPercentageEnglish = percentageEnglish
+            bestKey = potentialKey
+
+    return bestKey
 
 def decrypt(cipherText, key):
-    # Decrypt the cipherText using the key
+    
     plainText = []
+
     for character in cipherText:
         if character in LETTERS or character.upper() in LETTERS:
             if character in LETTERS:
@@ -172,11 +180,6 @@ def decrypt(cipherText, key):
     plainText = ''.join(plainText)
     return plainText
 
-
-
-
-
-
 def main():
     data = substitutionHacker("""Pkry ldi'e npqntd n cnt kf dgidwliy. Ewne'd qwne ewy kpjyc olcpd myue eypplio wyc qwyi dwy dnlj dwy wnj fkgij ewy uycfyae xni. Dwy wnj ewkgowe ewld qnd dlxupt bleeyc enpm ki ewylc unce dliay ewyt wnj byyi ginbpy ek flij ecgy pkry plmy wycd. Bge ikq dwy wnj ek fnay ewy fnae ewne ewyt xnt wnry byyi clowe. Pkry xnt ike npqntd by n cnt kf dgidwliy. Ewne ld gipydd ewyt qycy cyfycclio ek wkq ewy dgi ani bgci.
 
@@ -186,7 +189,8 @@ Ewy wynjuwkiyd qycy ki. Ewyt wnj byyi gelplhyj ki ugcukdy. Dwy akgpj wync wyc xk
 
 Ewycy qnd dkxyewlio duyalnp nbkge ewld pleepy acynegcy. Jkiin akgpji'e vgley uliuklie qwne le qnd, bge dwy miyq qlew npp wyc wynce ewne le qnd ecgy. Le qndi'e n xneeyc kf lf dwy qnd oklio ek ect nij dnry le, bge n xneeyc kf wkq dwy qnd oklio ek dnry le. Dwy qyie bnam ek ewy anc ek oye n bpnimye nij qwyi dwy cyegciyj ewy acynegcy qnd okiy.
 
-Jnry qneawyj nd ewy fkcyde bgciyj gu ki ewy wlpp, kipt n fyq xlpyd fckx wyc wkgdy. Ewy anc wnj byyi wndelpt unamyj nij Xncen qnd lidljy ectlio ek ckgij gu ewy pnde kf ewy uyed. Jnry qyie ewckgow wld xyienp plde kf ewy xkde lxukcenie unuycd nij jkagxyied ewne ewyt akgpji'e pynry bywlij. Wy dakpjyj wlxdypf fkc ike wnrlio ucyuncyj ewydy byeeyc li njrniay nij wkuyj ewne wy wnj cyxyxbycyj yryctewlio ewne qnd iyyjyj. Wy akieligyj ek qnle fkc Xncen ek nuuync qlew ewy uyed, bge dwy delpp qnd ikqwycy ek by dyyi.""")
+Jnry qneawyj nd ewy fkcyde bgciyj gu ki ewy wlpp, kipt n fyq xlpyd fckx wyc wkgdy. Ewy anc wnj byyi wndelpt unamyj nij Xncen qnd lidljy ectlio ek ckgij gu ewy pnde kf ewy uyed. Jnry qyie ewckgow wld xyienp plde kf ewy xkde lxukcenie unuycd nij jkagxyied ewne ewyt akgpji'e pynry bywlij. Wy dakpjyj wlxdypf fkc ike wnrlio ucyuncyj ewydy byeeyc li njrniay nij wkuyj ewne wy wnj cyxyxbycyj yryctewlio ewne qnd iyyjyj. Wy akieligyj ek qnle fkc Xncen ek nuuync qlew ewy uyed, bge dwy delpp qnd ikqwycy ek by dyyi.
+""")
 
     print(data["plainText"])
     print(data["key"])
