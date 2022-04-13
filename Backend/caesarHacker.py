@@ -34,4 +34,6 @@ def caesarHacker(cipherText):
                 "key": potentialKey
             }
     
-    raise Exception("Something went wrong :(")
+    return {
+        "message": "Sorry, could not decrypt the cipherText as a Caesar cipher, maybe try decrypting as a Transposition or Substitution cipher instead",
+    }

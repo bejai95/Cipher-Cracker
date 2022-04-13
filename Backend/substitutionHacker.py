@@ -13,20 +13,30 @@ from allWordPatterns import allWordPatterns
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 nonLettersSpaceOrApostrophePattern = re.compile('[^A-Z\s\']')
 
-def substitutionHacker(cipherText):
+def substitutionHackerPartial(cipherText):
     intersectedMapping = getIntersectedMapping(cipherText)
-    bestKey = getKeyBeforeFullDecipher(intersectedMapping)
+    key = getKeyBeforeFullDecipher(intersectedMapping)
     totalAmountPossibilities = getTotalAmountPossibilities(intersectedMapping)
-    
-    answer = input("To solve this substitution cipher completely, would need to try " + str(totalAmountPossibilities) + " possible keys. Type 'full' to fully decipher, or leave blank to just show what has already been worked out:\n")
 
-    if answer == "full":
-        bestKey = fullDecipher(cipherText, intersectedMapping)
-        
     return {
-        "plainText": decrypt(cipherText, bestKey),
-        "key": bestKey
+        "totalAmountPossibilities": totalAmountPossibilities,
+        "intersectedMapping": intersectedMapping,
+        "plainText": decrypt(cipherText, key),
+        "key": key
     }
+
+def substitutionHackerFull(cipherText, intersectedMapping):
+    newKey = fullDecipher(cipherText, intersectedMapping)
+
+    return {
+        "plainText": decrypt(cipherText, newKey),
+        "key": newKey
+    }
+
+    # answer = input("To solve this substitution cipher completely, would need to try " + str(totalAmountPossibilities) + " possible keys. Type 'full' to fully decipher, or leave blank to just show what has already been worked out:\n")
+
+        
+    
 
 def getIntersectedMapping(cipherText):
     intersectedMapping = getBlankCipherletterMapping()
@@ -155,7 +165,6 @@ def fullDecipher(cipherText, intersectedMapping):
         for cipherLetter in LETTERS:
             potentialKey[cipherLetter] = combination[cipherLetter][0]
 
-        print(potentialKey)
         potentialPlainText = decrypt(cipherText, potentialKey)
         percentageEnglish = getPercentageEnglishWords(potentialPlainText)
 
@@ -180,13 +189,3 @@ def decrypt(cipherText, key):
     
     plainText = ''.join(plainText)
     return plainText
-
-def main():
-    data = substitutionHacker("""Oybb brkl vsu br usyev iru bvs tbyut, cpb Gsurqwey bvrpjvb wb fyt bvs ortb uwlwepkrpt ylgwes tvs'l sgsu useswgsl. Tpus, wb vyl cssq fskk-osyqwqj fvsq vs tywl wb, cpb tvs lwlq'b pqlsutbyql fvm yqmrqs frpkl fyqb br tpjjstb trosbvwqj bvyb frpkl kwbsuykkm hwkk mrp wi mrp yebpykkm oyqyjsl br yevwsgs wb. Bvsus't qr fym vs'l yjuss.
-""")
-
-    print(data["plainText"])
-    print(data["key"])
-
-if __name__ == "__main__":
-    main()

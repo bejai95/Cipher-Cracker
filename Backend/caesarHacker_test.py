@@ -22,12 +22,12 @@ valid3PlainText = "HE'S, IT'S, LET'S ^SHE'S, AREN'T, CAN'T, DIDN'T, DON'T &ISN'T
 valid3CipherText = "RO'C, SD'C, VOD'C ^CRO'C, KBOX'D, MKX'D, NSNX'D, NYX'D &SCX'D, RKCX'D, RKNX'D, RKFOX'D, GOBOX'D, GYX'D. RO'N, S'N, CRO'N+ DROI'N- GO'N ioc RO'C, SD'C, VOD'C ^CRO'C, KBOX'D, MKX'D, NSNX'D, NYX'D &SCX'D, RKCX'D, RKNX'D, RKFOX'D, GOBOX'D, GYX'D. RO'N, S'N, CRO'N+ DROI'N- GO'N ioc RO'C, SD'C, VOD'C ^CRO'C, KBOX'D, MKX'D, NSNX'D, NYX'D &SCX'D, RKCX'D, RKNX'D, RKFOX'D GOBOX'D, GYX'D. RO'N, S'N, CRO')(*&&^%$#@!N DROI'!@#$%^&*()N- GO'N ioc xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn xydKGyBn"
 
 def testInvalid1():
-    with pytest.raises(Exception):
-        caesarHacker(invalid1CipherText)
+    data = caesarHacker(invalid1CipherText)
+    assert "message" in data.keys()
 
 def testInvalid2():
-    with pytest.raises(Exception):
-        caesarHacker(invalid2CipherText)
+    data = caesarHacker(invalid2CipherText)
+    assert "message" in data.keys()
 
 def testValid1():
     data = caesarHacker(valid1CipherText)

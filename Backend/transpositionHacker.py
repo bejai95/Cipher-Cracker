@@ -16,7 +16,9 @@ def transpositionHacker(cipherText):
                 "key": potentialKey
             }
     
-    raise Exception("Something went wrong :(")
+    return {
+        "message": "Sorry, could not decrypt the cipherText as a Transposition cipher, maybe try decrypting as a Caesar or Substitution cipher instead",
+    }
 
 def decrypt(cipherText, key):
     

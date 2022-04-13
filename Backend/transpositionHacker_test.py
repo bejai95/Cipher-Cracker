@@ -23,28 +23,28 @@ valid3PlainText = """Why do Americans have so many different types of towels? We
 valid3CipherText = """WethaemdsoocLo nilrku stsy ibounao svm a ntu.h yanlpr wfhewtdc y  beh otclwng uh aeiyw oryspvdsiyne  teo uc hced wuokyet flaogrt etwe oee ,n olto’l blodooa nh wl leoudvfai i herd s t gttsofs.dotuiwucaoibeyc rtl i ncntcelsom bod o .w   rdyls lh  lul utshlbnttae'o s  aoewitwf ettIyy.dhmd baey tto e ego ncsum dAnfaesoeoWlhat    ea ted  io  orb  wlse latemy clhwlro ek ywAbsndoavcatouwr euseu sodnhee ths esguwsecoi e.yrwcea  .pi iasolxesv yamrdo ,tl,eloe autb   yehrmtc  pftce sunaec t iiwt os tdr anrheuJd l sphaIaeoehdm rjrrut ncfeobw,a  kt    asuiw.teiin’  rm  aayoyktymeaflwae np1 hbbhncessi o nn dbd sttnn y?i pacnesetlqda fieeaohdthtIweg d eoc,ooy t  ldenesr?lhsu ptona n    eh’ef.brpawl wo ehoIlosus e s ,ileyrgcuddttts vlf eyrcnebe.txar’ w fshnW,t cerp shssiooh oe eIa oh aul ytt danoaaate ockt ee? e fw iyn wcfcqb cnt Ipr i n fcrv  hwa-’t a tdafednoeuit huatoi cseaAssdo ty"""
 
 def testInvalid1():
-    with pytest.raises(Exception):
-        transpositionHacker(invalid1CipherText)
+    data = transpositionHacker(invalid1CipherText)
+    assert "message" in data.keys()
 
 def testInvalid2():
-    with pytest.raises(Exception):
-        transpositionHacker(invalid2CipherText)
+    data = transpositionHacker(invalid2CipherText)
+    assert "message" in data.keys()
 
 def testInvalid3():
-    with pytest.raises(Exception):
-        transpositionHacker(invalid3CipherText)
+    data = transpositionHacker(invalid3CipherText)
+    assert "message" in data.keys()
 
 def testInvalid4():
-    with pytest.raises(Exception):
-        transpositionHacker(invalid4CipherText)
+    data = transpositionHacker(invalid4CipherText)
+    assert "message" in data.keys()
 
 def testInvalid5():
-    with pytest.raises(Exception):
-        transpositionHacker(invalid5CipherText)
+    data = transpositionHacker(invalid5CipherText)
+    assert "message" in data.keys()
 
 def testInvalid6():
-    with pytest.raises(Exception):
-        transpositionHacker(invalid6CipherText)
+    data = transpositionHacker(invalid6CipherText)
+    assert "message" in data.keys()
 
 def testValid1():
     data = transpositionHacker(valid1CipherText)
