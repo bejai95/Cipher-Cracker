@@ -1,4 +1,3 @@
-from tkinter import EXCEPTION
 from flask import Flask, request
 from json import dumps
 from caesarHacker import caesarHacker
@@ -9,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Please use a different route"
+    return "This is just the home route, it doesn't actually do anything. Please use a different route."
 
 @app.route('/caesar', methods=['PUT'])
 def caesar():
@@ -19,7 +18,7 @@ def caesar():
 @app.route('/transposition', methods=['PUT'])
 def transposition():
     data = request.get_json()
-    return dumps(caesarHacker(data["cipherText"]))
+    return dumps(transpositionHacker(data["cipherText"]))
 
 @app.route('/substitution', methods=['PUT'])
 def substitution():
@@ -35,15 +34,30 @@ def substitution():
             return dumps(substitutionHackerFull(data["cipherText"], data["intersectedMapping"]))
     else:
         raise Exception("mode paramater incorrect or missing")
-        
 
-    
-    
+@app.route('/unknown', methods=['PUT'])
+def unknown():
+    data = request.get_json()
 
+    caesar = caesarHacker(data["cipherText"])
+    if "message" not in caesar.keys():
+        return dumps({
+            "result": caesar,
+            "cipherType": "caesar"
+        })
 
-    
-    
+    transposition = transpositionHacker(data["cipherText"])
+    if "message" not in transposition.keys():
+        return dumps({
+            "result": transposition,
+            "cipherType": "transposition"
+        })
 
-
+    substitution = substitutionHackerPartial(data["cipherText"])
+    return dumps({
+        "result": substitution,
+        "cipherType": "substitution"
+    })
+   
 if __name__ == "__main__":
     app.run(port=2000)
