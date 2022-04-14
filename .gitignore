@@ -8,3 +8,4 @@ Backend/__pycache__/allWordPatterns.cpython-310.pyc
 Backend/__pycache__/wordPatternsGeneral.cpython-310.pyc
 Backend/__pycache__/substitutionHacker.cpython-310.pyc
 Backend/__pycache__/server.cpython-310.pyc
+Backend/__pycache__/server_test.cpython-310-pytest-7.1.1.pyc
