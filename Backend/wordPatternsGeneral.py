@@ -1,7 +1,6 @@
 # This module can be used to get the 'word pattern' of a word, and also to create the allWordPatterns.py file
 # It uses some code/ideas from https://inventwithpython.com/hacking/chapter18.html
 
-from ast import pattern
 import pprint
 
 def getWordPattern(word):
