@@ -35,5 +35,5 @@ def caesarHacker(cipherText):
             }
     
     return {
-        "message": "Sorry, could not decrypt the cipherText as a Caesar cipher, maybe try decrypting as a Transposition or Substitution cipher instead",
+        "message": "Sorry, could not decrypt the ciphertext as a Caesar cipher, maybe try decrypting as a Transposition or Substitution cipher instead.",
     }

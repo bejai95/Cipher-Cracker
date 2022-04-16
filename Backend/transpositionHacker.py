@@ -17,7 +17,7 @@ def transpositionHacker(cipherText):
             }
     
     return {
-        "message": "Sorry, could not decrypt the cipherText as a Transposition cipher, maybe try decrypting as a Caesar or Substitution cipher instead",
+        "message": "Sorry, could not decrypt the ciphertext as a Transposition cipher, maybe try decrypting as a Caesar or Substitution cipher instead.",
     }
 
 def decrypt(cipherText, key):
