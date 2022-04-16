@@ -28,7 +28,7 @@ def substitution():
     if mode == "partial":
         return dumps(substitutionHackerPartial(data["cipherText"]))
     elif mode == "full":
-        if "intersectedMapplicationing" not in data.keys():
+        if "intersectedMapping" not in data.keys():
             raise Exception("intersectedMapping argument was not provided")
         else:
             return dumps(substitutionHackerFull(data["cipherText"], data["intersectedMapping"]))
