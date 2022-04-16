@@ -1,5 +1,8 @@
+from email.mime import base
 import pytest
 import requests
+
+baseURL = "http://ciphercrackerapi-env.eba-eqyks7ak.ap-southeast-2.elasticbeanstalk.com/"
 
 caesar1CipherText = "Ny bfx f htshjwsnsl ijajqturjsy ymfy mj htzqis'y ljy tzy tk mnx rnsi. Mj'i mfi rfsd kwnjsix ymwtzlmtzy mnx jfwqd djfwx fsi mfi ktsi rjrtwnjx tk uqfdnsl bnym ymjr, gzy mj htzqis'y zsijwxyfsi mtb ny mfi fqq xytuuji. Ymjwj bfx xtrj utnsy fx mj lwjb zu ymfy mj uqfdji bnym jfhm tk mnx kwnjsix ktw ymj ajwd qfxy ynrj, fsi mj mfi st nijf ymfy ny btzqi gj ymj qfxy."
 
@@ -113,7 +116,7 @@ Dave watched as the forest burned up on the hill, only a few miles from her hous
 
 
 def testcaesar1():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": caesar1CipherText}
 
     r = requests.put(url, json = param)
@@ -122,7 +125,7 @@ def testcaesar1():
     assert payload["result"]["plainText"] == caesar1PlainText
 
 def testcaesar2():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": caesar2CipherText}
 
     r = requests.put(url, json = param)
@@ -131,7 +134,7 @@ def testcaesar2():
     assert payload["result"]["plainText"] == caesar2PlainText
 
 def testcaesar3():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": caesar3CipherText}
 
     r = requests.put(url, json = param)
@@ -140,7 +143,7 @@ def testcaesar3():
     assert payload["result"]["plainText"] == caesar3PlainText
 
 def testTransposition1():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": transposition1CipherText}
 
     r = requests.put(url, json = param)
@@ -149,7 +152,7 @@ def testTransposition1():
     assert payload["result"]["plainText"] == transposition1PlainText
 
 def testTransposition2():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": transposition2CipherText}
 
     r = requests.put(url, json = param)
@@ -158,7 +161,7 @@ def testTransposition2():
     assert payload["result"]["plainText"] == transposition2PlainText
 
 def testSubstitutionPartial1():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution1CipherText}
 
     r = requests.put(url, json = param)
@@ -166,7 +169,7 @@ def testSubstitutionPartial1():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial2():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution2CipherText}
     
     r = requests.put(url, json = param)
@@ -174,7 +177,7 @@ def testSubstitutionPartial2():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial3():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution3CipherText}
 
     r = requests.put(url, json = param)
@@ -182,7 +185,7 @@ def testSubstitutionPartial3():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial4():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution4CipherText}
 
     r = requests.put(url, json = param)
@@ -190,7 +193,7 @@ def testSubstitutionPartial4():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial5():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution5CipherText}
 
     r = requests.put(url, json = param)
@@ -198,7 +201,7 @@ def testSubstitutionPartial5():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial6():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution6CipherText}
 
     r = requests.put(url, json = param)
@@ -206,7 +209,7 @@ def testSubstitutionPartial6():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial7():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution7CipherText}
 
     r = requests.put(url, json = param)
@@ -214,7 +217,7 @@ def testSubstitutionPartial7():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial8():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution8CipherText}
 
     r = requests.put(url, json = param)
@@ -222,7 +225,7 @@ def testSubstitutionPartial8():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial9():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution9CipherText}
 
     r = requests.put(url, json = param)
@@ -230,7 +233,7 @@ def testSubstitutionPartial9():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionPartial10():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution10CipherText}
 
     r = requests.put(url, json = param)
@@ -238,14 +241,14 @@ def testSubstitutionPartial10():
     assert payload["cipherType"] == "substitution"
 
 def testSubstitutionFull1():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution6CipherText}
 
     r = requests.put(url, json = param)
     payload = r.json()
     intersectedMapping = payload["result"]["intersectedMapping"]
 
-    url2 = 'http://127.0.0.1:5000/substitution?mode=full'
+    url2 = baseURL + 'substitution?mode=full'
     params = {"cipherText": substitution6CipherText, "intersectedMapping": intersectedMapping}
 
     r = requests.put(url2, json = params)
@@ -253,15 +256,16 @@ def testSubstitutionFull1():
 
     assert payload["plainText"] == substitution6PlainText
 
+"""
 def testSubstitutionFull2():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution8CipherText}
 
     r = requests.put(url, json = param)
     payload = r.json()
     intersectedMapping = payload["result"]["intersectedMapping"]
 
-    url2 = 'http://127.0.0.1:5000/substitution?mode=full'
+    url2 = baseURL + 'substitution?mode=full'
     params = {"cipherText": substitution8CipherText, "intersectedMapping": intersectedMapping}
 
     r = requests.put(url2, json = params)
@@ -270,17 +274,18 @@ def testSubstitutionFull2():
     assert payload["plainText"] == substitution8PlainText
 
 def testSubstitutionFull3():
-    url = 'http://127.0.0.1:5000/unknown'
+    url = baseURL + "unknown"
     param = {"cipherText": substitution10CipherText}
 
     r = requests.put(url, json = param)
     payload = r.json()
     intersectedMapping = payload["result"]["intersectedMapping"]
 
-    url2 = 'http://127.0.0.1:5000/substitution?mode=full'
+    url2 = baseURL + 'substitution?mode=full'
     params = {"cipherText": substitution10CipherText, "intersectedMapping": intersectedMapping}
 
     r = requests.put(url2, json = params)
     payload = r.json()
 
     assert payload["plainText"] == substitution10PlainText
+"""
