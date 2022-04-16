@@ -4,23 +4,23 @@ from caesarHacker import caesarHacker
 from transpositionHacker import transpositionHacker
 from substitutionHacker import substitutionHackerPartial, substitutionHackerFull
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route("/")
+@application.route("/")
 def home():
     return "This is just the home route, it doesn't actually do anything. Please use a different route."
 
-@app.route('/caesar', methods=['PUT'])
+@application.route('/caesar', methods=['PUT'])
 def caesar():
     data = request.get_json()
     return dumps(caesarHacker(data["cipherText"]))
 
-@app.route('/transposition', methods=['PUT'])
+@application.route('/transposition', methods=['PUT'])
 def transposition():
     data = request.get_json()
     return dumps(transpositionHacker(data["cipherText"]))
 
-@app.route('/substitution', methods=['PUT'])
+@application.route('/substitution', methods=['PUT'])
 def substitution():
     data = request.get_json()
     
@@ -28,14 +28,14 @@ def substitution():
     if mode == "partial":
         return dumps(substitutionHackerPartial(data["cipherText"]))
     elif mode == "full":
-        if "intersectedMapping" not in data.keys():
+        if "intersectedMapplicationing" not in data.keys():
             raise Exception("intersectedMapping argument was not provided")
         else:
             return dumps(substitutionHackerFull(data["cipherText"], data["intersectedMapping"]))
     else:
         raise Exception("mode paramater incorrect or missing")
 
-@app.route('/unknown', methods=['PUT'])
+@application.route('/unknown', methods=['PUT'])
 def unknown():
     data = request.get_json()
 
@@ -60,4 +60,4 @@ def unknown():
     })
    
 if __name__ == "__main__":
-    app.run()
+    application.run()
