@@ -3,8 +3,10 @@ from json import dumps
 from caesarHacker import caesarHacker
 from transpositionHacker import transpositionHacker
 from substitutionHacker import substitutionHackerPartial, substitutionHackerFull
+from flask_cors import CORS
 
 application = Flask(__name__)
+CORS(application)
 
 @application.route("/")
 def home():
