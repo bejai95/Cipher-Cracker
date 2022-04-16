@@ -1,4 +1,3 @@
-from email.mime import base
 import pytest
 import requests
 
@@ -142,6 +141,14 @@ def testcaesar3():
     assert payload["cipherType"] == "caesar"
     assert payload["result"]["plainText"] == caesar3PlainText
 
+def testcaesar4():
+    url = baseURL + "caesar"
+    param = {"cipherText": caesar3CipherText}
+
+    r = requests.put(url, json = param)
+    payload = r.json()
+    assert payload["plainText"] == caesar3PlainText
+
 def testTransposition1():
     url = baseURL + "unknown"
     param = {"cipherText": transposition1CipherText}
@@ -159,6 +166,14 @@ def testTransposition2():
     payload = r.json()
     assert payload["cipherType"] == "transposition"
     assert payload["result"]["plainText"] == transposition2PlainText
+
+def testTransposition3():
+    url = baseURL + "transposition"
+    param = {"cipherText": transposition2CipherText}
+
+    r = requests.put(url, json = param)
+    payload = r.json()
+    assert payload["plainText"] == transposition2PlainText
 
 def testSubstitutionPartial1():
     url = baseURL + "unknown"
@@ -256,7 +271,6 @@ def testSubstitutionFull1():
 
     assert payload["plainText"] == substitution6PlainText
 
-"""
 def testSubstitutionFull2():
     url = baseURL + "unknown"
     param = {"cipherText": substitution8CipherText}
@@ -288,4 +302,3 @@ def testSubstitutionFull3():
     payload = r.json()
 
     assert payload["plainText"] == substitution10PlainText
-"""
