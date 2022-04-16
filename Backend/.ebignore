@@ -1,0 +1,6 @@
+__pycache__
+.pytest_cache
+venv
+caesarHacker_test.py
+server_test.py
+transpositionHacker_test.py
