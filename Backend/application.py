@@ -60,4 +60,4 @@ def unknown():
     })
    
 if __name__ == "__main__":
-    app.run(port=2000)
+    app.run()
