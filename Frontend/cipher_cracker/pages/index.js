@@ -11,16 +11,18 @@ function NewlineText(props) {
 }
 
 export default function Home() {
+  const [cipherText, setCipherText] = useState("");
   const [plainText, setPlainText] = useState("");
   const [key, setKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [unknownCipherType, setUnknownCipherType] = useState("");
   const [totalAmountPossibilities, setTotalAmountPossibilities] = useState("");
-  
+  const [intersectedMapping, setIntersectedMapping] = useState({});
 
   async function handleSubmit(event) {
     event.preventDefault();
     
+    setCipherText(event.target.cipherText.value)
     const cipherType = event.target.cipherType.value; // Need to do it this way because useState is asynchronous
     const apiurlFull = apiurl + cipherType;
 
@@ -46,14 +48,15 @@ export default function Home() {
     setErrorMessage("")
     setUnknownCipherType("")
     setTotalAmountPossibilities("")
+    setIntersectedMapping({})
 
-    
     if (cipherType === "unknown") {
       setUnknownCipherType(result.cipherType)
       setPlainText(result.result.plainText)
 
       if (result.cipherType === "substitution") {
         setTotalAmountPossibilities(result.result.totalAmountPossibilities)
+        setIntersectedMapping(result.result.intersectedMapping)
         const keyAsString = JSON.stringify(result.result.key, null, 1)
         setKey(keyAsString)
       } else {
@@ -61,17 +64,16 @@ export default function Home() {
       }
       
     } else {
-      
       if ("message" in result) {
         setPlainText("");
         setKey("");
         setErrorMessage(result.message)
-      
       } else {
         setPlainText(result.plainText)
-  
+        
         if (cipherType === "substitution") {
           setTotalAmountPossibilities(result.totalAmountPossibilities)
+          setIntersectedMapping(result.intersectedMapping)
           const keyAsString = JSON.stringify(result.key, null, 1)
           setKey(keyAsString)
         } else {
@@ -80,6 +82,28 @@ export default function Home() {
       }
     }
   }
+
+  async function handleFullSubstitution() {
+    const res = await fetch(
+      apiurl + 'substitution?mode=full',
+      {
+        body: JSON.stringify({
+          cipherText: cipherText,
+          intersectedMapping: intersectedMapping
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'PUT'
+      }
+    )
+    const result = await res.json()
+
+    setPlainText(result.plainText)
+    const keyAsString = JSON.stringify(result.key, null, 1)
+    setKey(keyAsString)
+  }
+
   
   return (
     <div className={styles.container}>
@@ -109,8 +133,10 @@ export default function Home() {
           <p>{errorMessage}</p>
           <h2>Unknown Cipher Type:</h2>
           <p>{unknownCipherType}</p>
-          <h2>Total Amount Possibilities</h2>
+          <h2>Total Amount Possibilities (for substitution):</h2>
           <p>{totalAmountPossibilities}</p>
+          <h2>Full substitution options:</h2>
+          <button onClick={handleFullSubstitution}>Full Substitution</button>
 
 
       </div>
