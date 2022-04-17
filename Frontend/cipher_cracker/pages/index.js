@@ -2,22 +2,31 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import apiurl from "../utils/apiurl";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function NewlineText(props) {
   const text = props.text;
-  const newText = text.split('\n').map(str => <p>{str}</p>);
+  const newText = text.split('\n').map((str, index) => <p key={index}>{str}</p>);
   return newText;
 }
 
 export default function Home() {
   const [plainText, setPlainText] = useState("");
   const [key, setKey] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [unknownCipherType, setUnknownCipherType] = useState("");
+  const [totalAmountPossibilities, setTotalAmountPossibilities] = useState("");
+  
 
   async function handleSubmit(event) {
     event.preventDefault();
     
-    const apiurlFull = apiurl + event.target.CipherType.value
+    const cipherType = event.target.cipherType.value; // Need to do it this way because useState is asynchronous
+    const apiurlFull = apiurl + cipherType;
+
+  if (cipherType === "substitution") {
+    apiurlFull += "?mode=partial"
+  }
 
     const res = await fetch(
       apiurlFull,
@@ -33,8 +42,43 @@ export default function Home() {
     )
 
     const result = await res.json()
-    setPlainText(result.plainText)
-    setKey(result.key)
+
+    setErrorMessage("")
+    setUnknownCipherType("")
+    setTotalAmountPossibilities("")
+
+    
+    if (cipherType === "unknown") {
+      setUnknownCipherType(result.cipherType)
+      setPlainText(result.result.plainText)
+
+      if (result.cipherType === "substitution") {
+        setTotalAmountPossibilities(result.result.totalAmountPossibilities)
+        const keyAsString = JSON.stringify(result.result.key, null, 1)
+        setKey(keyAsString)
+      } else {
+        setKey(result.result.key)
+      }
+      
+    } else {
+      
+      if ("message" in result) {
+        setPlainText("");
+        setKey("");
+        setErrorMessage(result.message)
+      
+      } else {
+        setPlainText(result.plainText)
+  
+        if (cipherType === "substitution") {
+          setTotalAmountPossibilities(result.totalAmountPossibilities)
+          const keyAsString = JSON.stringify(result.key, null, 1)
+          setKey(keyAsString)
+        } else {
+          setKey(result.key);
+        }
+      }
+    }
   }
   
   return (
@@ -45,7 +89,7 @@ export default function Home() {
       <div>
         <h1>Cipher Cracker</h1>
           <form onSubmit={handleSubmit}>
-            <select name="CipherType" defaultValue="Caesar">
+            <select name="cipherType" defaultValue="caesar">
               <option value="caesar">Caesar</option>
               <option value="transposition">Transposition</option>
               <option value="substitution">Substitution</option>
@@ -61,6 +105,13 @@ export default function Home() {
           <NewlineText text={plainText} />
           <h2>Key:</h2>
           <p>{key}</p>
+          <h2>Error Message:</h2>
+          <p>{errorMessage}</p>
+          <h2>Unknown Cipher Type:</h2>
+          <p>{unknownCipherType}</p>
+          <h2>Total Amount Possibilities</h2>
+          <p>{totalAmountPossibilities}</p>
+
 
       </div>
     </div>
