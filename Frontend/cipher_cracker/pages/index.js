@@ -12,7 +12,7 @@ function NewlineText(props) {
 }
 
 export default function Home() {
-  const [alreadyBeeenSubmit, setAlreadyBeeenSubmit] = useState(false);
+  const [alreadyBeenSubmit, setAlreadyBeenSubmit] = useState(false);
   const [cipherText, setCipherText] = useState("");
   const [plainText, setPlainText] = useState("");
   const [key, setKey] = useState("");
@@ -25,7 +25,7 @@ export default function Home() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setAlreadyBeeenSubmit(true)
+    setAlreadyBeenSubmit(true)
     
     setCipherText(event.target.cipherText.value);
     const cipherType = event.target.cipherType.value; // useState is asynchronous
@@ -66,7 +66,7 @@ export default function Home() {
         setIsSubstitution(true)
         setTotalAmountPossibilities(result.result.totalAmountPossibilities)
         setIntersectedMapping(result.result.intersectedMapping)
-        const keyAsString = JSON.stringify(result.result.key, null, 1)
+        const keyAsString = JSON.stringify(result.result.key)
         setKey(keyAsString)
       } else {
         setKey(result.result.key)
@@ -83,7 +83,7 @@ export default function Home() {
         if (cipherType === "substitution") {
           setTotalAmountPossibilities(result.totalAmountPossibilities)
           setIntersectedMapping(result.intersectedMapping)
-          const keyAsString = JSON.stringify(result.key, null, 1)
+          const keyAsString = JSON.stringify(result.key)
           setKey(keyAsString)
         } else {
           setKey(result.key);
@@ -109,7 +109,7 @@ export default function Home() {
     const result = await res.json()
 
     setPlainText(result.plainText)
-    const keyAsString = JSON.stringify(result.key, null, 1)
+    const keyAsString = JSON.stringify(result.key)
     setKey(keyAsString)
   }
 
@@ -121,9 +121,16 @@ export default function Home() {
       <div className={styles.container}>
         <NavBar></NavBar>
 
-        <div className="jumbotron">
-          <h1 className="display-4">Decrypter Tool</h1>
-          <p className="lead">Use this tool to decrypt any Caesar, Transposition or Substitution cipher. The tool will display the plaintext and the key which was used to encrypt the message. For more information, please see the Encryption Methods page.</p>
+
+      <div className='mb-4'>
+        <h1 className="display-4">Decrypter Tool</h1>
+        <p className="lead">Use this tool to decrypt any Caesar, Transposition or Substitution cipher. For more information, please see the Encryption Methods page.</p>
+      </div>
+
+      <div className="d-flex flex-row justify-content-between">
+
+        <div className="jumbotron" style={{width: "40%"}}>
+          <h1 className="display-6">Query</h1>
           <hr className="my-4"></hr>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -138,50 +145,93 @@ export default function Home() {
             </div>
             <div className="mb-3">
               <label htmlFor="cipherText" className="form-label">Ciphertext:</label>
-              <textarea name="cipherText" id="cipherText" className="form-control" placeholder="Enter Ciphertext..." rows="10" />
+              <textarea name="cipherText" id="cipherText" className="form-control" placeholder="Enter Ciphertext..." rows="9" />
             </div>
-            <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+            <button type="submit" className="btn btn-primary btn-lg">Decrypt</button>
           </form>
         </div>
 
+        <div style={{position: "relative", width: "15%"}}>
+          <Image src="/arrow-right.svg" layout="fill" objectFit="contain"></Image>
+        </div>
+        
+
+        <div className="jumbotron" style={{width: "40%"}}>
+          <h1 className="display-6">Result</h1>
+          <hr className="my-4"></hr>
+
+          <form>
+            <div className="mb-3">
+            <label htmlFor="key" className="form-label">Key:</label>
+            <textarea id="key" className="form-control" placeholder="Please enter valid ciphertext first..." value={key} rows="2" readOnly></textarea>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="plaintext" className="form-label">Plaintext:</label>
+              <textarea id="plaintext" className="form-control" placeholder="Please enter valid ciphertext first..." value={plainText} rows="9" readOnly/>
+            </div>
+          </form>
+          
+          
+          
+
+          
+          
 
 
+          
 
-        {alreadyBeeenSubmit &&
-          <div id='results-box'>
-            {errorMessage ? (
-              <div id='error-message-box'>
-                <h2>Error Message:</h2>
-                <p>{errorMessage}</p>
-              </div>
-            ) : ( 
-              
-              <div id='general-results-box'>
-                {unknownCipherType &&
-                  <div id='unknown-cipher-type-box'>
-                    <h2>Unknown Cipher Type:</h2>
-                    <p>{unknownCipherType}</p>
-                  </div>
-                }                  
+          {alreadyBeenSubmit &&
+            <div id='results-box'>
+              {errorMessage ? (
+                <div id='error-message-box'>
+                  <h2>Error Message:</h2>
+                  <p>{errorMessage}</p>
+                </div>
+              ) : ( 
                 
-                <h2>Plaintext:</h2>
-                <NewlineText text={plainText} />
-                <h2>Key:</h2>
-                <p>{key}</p>
+                <div id='general-results-box'>
+                  {unknownCipherType &&
+                    <p> The plaintext for the ciphertext that you entered was encrypted using a <b>{unknownCipherType}</b> cipher. </p>
+                  }                  
+                  
+                  <h2>Plaintext:</h2>
+                  <NewlineText text={plainText} />
+                  <h2>Key:</h2>
+                  <p>{key}</p>
 
-                {isSubstitution &&
-                  <div id='full-substitution-options-box'>
-                    <h2>Total Amount Possibilities (for substitution):</h2>
-                    <p>{totalAmountPossibilities}</p>
-                    <h2>Full substitution option:</h2>
-                    <button onClick={handleFullSubstitution}>Full Substitution</button>
-                  </div>
-                }
-              
-              </div>
-            )} 
-          </div>
-        }
+                  {isSubstitution &&
+                    <div id='full-substitution-options-box'>
+                      <h2>Total Amount Possibilities (for substitution):</h2>
+                      <p>{totalAmountPossibilities}</p>
+                      <h2>Full substitution option:</h2>
+                      <button onClick={handleFullSubstitution}>Full Substitution</button>
+                    </div>
+                  }
+                
+                </div>
+              )} 
+            </div>
+          }
+          
+        </div>
+
+
+      </div>
+
+      
+      
+      
+      
+      
+
+        
+
+        
+
+
+
+
+        
       </div>
     </div>
   )

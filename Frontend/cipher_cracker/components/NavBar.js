@@ -4,7 +4,7 @@ import logo from "../public/logo.png"
 
 export default function NarBar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-2">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <Image src={logo} width={100} height={71} />
@@ -21,7 +21,7 @@ export default function NarBar() {
               <a className="nav-link" href="#">Encryption Methods</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Expanation Video</a>
+              <a className="nav-link" href="#">Explanation Video</a>
             </li>
           </ul>
         </div>
