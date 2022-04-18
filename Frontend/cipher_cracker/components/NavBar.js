@@ -18,6 +18,9 @@ export default function NarBar() {
               <a className="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li className="nav-item">
+              <a className="nav-link" href="#">Encryption Methods</a>
+            </li>
+            <li className="nav-item">
               <a className="nav-link" href="#">Expanation Video</a>
             </li>
           </ul>

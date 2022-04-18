@@ -12,6 +12,7 @@ function NewlineText(props) {
 }
 
 export default function Home() {
+  const [alreadyBeeenSubmit, setAlreadyBeeenSubmit] = useState(false);
   const [cipherText, setCipherText] = useState("");
   const [plainText, setPlainText] = useState("");
   const [key, setKey] = useState("");
@@ -24,6 +25,7 @@ export default function Home() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setAlreadyBeeenSubmit(true)
     
     setCipherText(event.target.cipherText.value);
     const cipherType = event.target.cipherType.value; // useState is asynchronous
@@ -118,58 +120,68 @@ export default function Home() {
       </Head>
       <div className={styles.container}>
         <NavBar></NavBar>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label for="selectCipherType" className="form-label">Cipher Type:</label>
-            <select className="form-select" name="cipherType" defaultValue="caesar" id="selectCipherType">
-              <option value="caesar">Caesar</option>
-              <option value="transposition">Transposition</option>
-              <option value="substitution">Substitution</option>
-              <option value="unknown">Unknown</option>
-            </select>
-            <div className="form-text">If the encryption method of the ciphertext is not known, use the unknown option.</div>
-          </div>
-          <div className="mb-3">
-            <label for="cipherText" className="form-label">Ciphertext:</label>
-            <textarea name="cipherText" id="cipherText" className="form-control" placeholder="Enter Ciphertext..." rows="10" />
-          </div>
-        
-        
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-        <div id='results-box'>
-          {errorMessage ? (
-            <div id='error-message-box'>
-              <h2>Error Message:</h2>
-              <p>{errorMessage}</p>
-            </div>
-          ) : ( 
-            
-            <div id='general-results-box'>
-              {unknownCipherType &&
-                <div id='unknown-cipher-type-box'>
-                  <h2>Unknown Cipher Type:</h2>
-                  <p>{unknownCipherType}</p>
-                </div>
-              }                  
-              
-              <h2>Plaintext:</h2>
-              <NewlineText text={plainText} />
-              <h2>Key:</h2>
-              <p>{key}</p>
 
-              {isSubstitution &&
-                <div id='full-substitution-options-box'>
-                  <h2>Total Amount Possibilities (for substitution):</h2>
-                  <p>{totalAmountPossibilities}</p>
-                  <h2>Full substitution option:</h2>
-                  <button onClick={handleFullSubstitution}>Full Substitution</button>
-                </div>
-              }
-            
+        <div className="jumbotron">
+          <h1 className="display-4">Decrypter Tool</h1>
+          <p className="lead">Use this tool to decrypt any Caesar, Transposition or Substitution cipher. The tool will display the plaintext and the key which was used to encrypt the message. For more information, please see the Encryption Methods page.</p>
+          <hr className="my-4"></hr>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="selectCipherType" className="form-label">Cipher Type:</label>
+              <select className="form-select" name="cipherType" defaultValue="caesar" id="selectCipherType">
+                <option value="caesar">Caesar</option>
+                <option value="transposition">Transposition</option>
+                <option value="substitution">Substitution</option>
+                <option value="unknown">Unknown</option>
+              </select>
+              <div className="form-text">If the encryption method of the ciphertext is not known, use the unknown option.</div>
             </div>
-          )} 
+            <div className="mb-3">
+              <label htmlFor="cipherText" className="form-label">Ciphertext:</label>
+              <textarea name="cipherText" id="cipherText" className="form-control" placeholder="Enter Ciphertext..." rows="10" />
+            </div>
+            <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+          </form>
         </div>
+
+
+
+
+        {alreadyBeeenSubmit &&
+          <div id='results-box'>
+            {errorMessage ? (
+              <div id='error-message-box'>
+                <h2>Error Message:</h2>
+                <p>{errorMessage}</p>
+              </div>
+            ) : ( 
+              
+              <div id='general-results-box'>
+                {unknownCipherType &&
+                  <div id='unknown-cipher-type-box'>
+                    <h2>Unknown Cipher Type:</h2>
+                    <p>{unknownCipherType}</p>
+                  </div>
+                }                  
+                
+                <h2>Plaintext:</h2>
+                <NewlineText text={plainText} />
+                <h2>Key:</h2>
+                <p>{key}</p>
+
+                {isSubstitution &&
+                  <div id='full-substitution-options-box'>
+                    <h2>Total Amount Possibilities (for substitution):</h2>
+                    <p>{totalAmountPossibilities}</p>
+                    <h2>Full substitution option:</h2>
+                    <button onClick={handleFullSubstitution}>Full Substitution</button>
+                  </div>
+                }
+              
+              </div>
+            )} 
+          </div>
+        }
       </div>
     </div>
   )
