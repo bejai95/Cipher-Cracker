@@ -9,7 +9,6 @@ import Button from 'react-bootstrap/Button';
 import CloseButton from 'react-bootstrap/CloseButton';
 
 export default function Home() {
-  const [alreadyBeenSubmit, setAlreadyBeenSubmit] = useState(false);
 
   const [cipherText, setCipherText] = useState("");
   const [plainText, setPlainText] = useState("");
@@ -23,10 +22,10 @@ export default function Home() {
   const [showSubstitutionModal, setShowSubstitutionModal] = useState(false);
   const [totalAmountPossibilities, setTotalAmountPossibilities] = useState("");
   const [intersectedMapping, setIntersectedMapping] = useState({});
-
+  const [buttonDisabled, setbuttonDisabled] = useState(false);
+  
   async function handleSubmit(event) {
     event.preventDefault();
-    setAlreadyBeenSubmit(true)
     
     setCipherText(event.target.cipherText.value);
     const cipherType = event.target.cipherType.value; // useState is asynchronous
@@ -55,10 +54,10 @@ export default function Home() {
     const result = await res.json()
 
     setErrorMessage("")
-    setShowErrorModal(false)
     setUnknownCipherType("")
     setTotalAmountPossibilities("")
     setIntersectedMapping({})
+    setbuttonDisabled(false)
     
     if (cipherType === "unknown") {
       setUnknownCipherType(result.cipherType)
@@ -69,9 +68,13 @@ export default function Home() {
         
         let amountPossible = result.result.totalAmountPossibilities;
         if (amountPossible != 1) {
-          setTotalAmountPossibilities(amountPossible)
+          setTotalAmountPossibilities(amountPossible);
+          if (amountPossible > 500000) {
+            setbuttonDisabled(true);
+          }
         } else {
           setTotalAmountPossibilities("infinite")
+          setbuttonDisabled(true)
         }
         
         setIntersectedMapping(result.result.intersectedMapping)
@@ -92,11 +95,17 @@ export default function Home() {
         setPlainText(result.plainText)
         
         if (cipherType === "substitution") {
+          setShowSubstitutionModal(true)
+
           let amountPossible = result.totalAmountPossibilities;
           if (amountPossible != 1) {
-            setTotalAmountPossibilities(amountPossible)
+            setTotalAmountPossibilities(amountPossible);
+            if (amountPossible > 500000) {
+              setbuttonDisabled(true);
+            }
           } else {
             setTotalAmountPossibilities("infinite")
+            setbuttonDisabled(true)
           }
         
           setIntersectedMapping(result.intersectedMapping)
@@ -105,6 +114,24 @@ export default function Home() {
         } else {
           setKey(result.key);
         }
+      }
+    }
+  }
+
+  function estimateResponseTime() {
+    if (totalAmountPossibilities === "infinite") {
+      return "There are too many possible keys for full decipher"
+    } else {
+      const asNum = parseInt(totalAmountPossibilities);
+  
+      if (asNum < 100000) {
+        return "1-3 seconds";
+      } else if (asNum <= 200000) {
+        return "Less than 1 minute";
+      } else if (asNum <= 500000) {
+        return "Less than 3 minutes"
+      } else {
+        return "There are too many possible keys for a full decipher. Try entering a longer ciphertext."
       }
     }
   }
@@ -136,6 +163,7 @@ export default function Home() {
     setPlainText(result.plainText)
     const keyAsString = JSON.stringify(result.key)
     setKey(keyAsString)
+    setShowSubstitutionModal(false)
   }
 
 
@@ -233,16 +261,33 @@ export default function Home() {
           </Modal.Header>
           <Modal.Body>
             <p>Doing a partial substitution decipher, the decrypter tool initially found {<b>{totalAmountPossibilities}</b>} possible keys for your ciphertext. You can choose to either view the plaintext using the currently known letters from the partial decipher (with _'s in the place of the unknown letters), or do a full decipher to potentially decrypt the remaining letters. </p>
-            <p><b>Approximate Response Times for Full Decipher:</b></p>
-            <ul>
-              <li> {"<"} 1000 possible keys: 1-3 seconds</li>
-            </ul>
+            <p>Your estimated response time for Full Decipher: <b>{estimateResponseTime(totalAmountPossibilities)}</b></p>
+            <div class="accordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                    Approximate Response Times for Full Decipher:
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                  <div class="accordion-body">
+                  <ul>
+                    <li> Less than 10 000 possible keys: ≈ 1-3 seconds</li>
+                    <li> 10 000 - 200 000 possible keys: ≈ Less than 1 minute</li>
+                    <li> 200 000 - 500 000 possible keys: ≈ Less than 3 minutes</li>
+                    <li> More than 500 000 possible keys: Too many possible keys for a full decipher</li>
+                  </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </Modal.Body>
           <Modal.Footer>
           <Button variant="primary" onClick={handlePartialSubstitutionDecipher}>
             Partial Decipher
           </Button>
-          <Button variant="success" onClick={handleFullSubstitutionDecipher}>
+          <Button variant="success" onClick={handleFullSubstitutionDecipher} disabled={buttonDisabled} >
             Full Decipher
           </Button>
           </Modal.Footer>
