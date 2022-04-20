@@ -229,7 +229,7 @@ export default function Home() {
           </div>
 
           <div style={{position: "relative", width: "13%"}}>
-            <Image src="/arrow-right.svg" layout="fill" objectFit="contain" />
+            <Image src="/arrow-right.svg"  alt="Arrow Right" layout="fill" objectFit="contain" />
           </div>
           
           <div className="jumbotron" style={{width: "41%"}}>
@@ -285,7 +285,7 @@ export default function Home() {
               <CloseButton onClick={handlePartialSubstitutionDecipher}/>
             </Modal.Header>
             <Modal.Body>
-              <p>Doing a partial substitution decipher, the decrypter tool initially found {<b>{totalAmountPossibilities}</b>} possible keys for your ciphertext. You can choose to either view the plaintext using the currently known letters from the partial decipher (with _'s in the place of the unknown letters), or do a full decipher to potentially decrypt the remaining letters. </p>
+              <p>Doing a partial substitution decipher, the decrypter tool initially found {<b>{totalAmountPossibilities}</b>} possible keys for your ciphertext. You can choose to either view the plaintext using the currently known letters from the partial decipher (with _&apos;s in the place of the unknown letters), or do a full decipher to potentially decrypt the remaining letters. </p>
               <p>Your estimated response time for Full Decipher: <b>{estimateResponseTime(totalAmountPossibilities)}</b></p>
               <div className="accordion">
                 <div className="accordion-item">
