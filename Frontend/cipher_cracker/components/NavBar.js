@@ -27,6 +27,9 @@ export default function NarBar() {
             </li>
           </ul>
         </div>
+        <div className="lead text-light" >
+          By Bejai Cobbing
+        </div>
       </div>
     </nav>
   )
