@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-baseURL = "http://ciphercrackerapi-env.eba-eqyks7ak.ap-southeast-2.elasticbeanstalk.com/"
+baseURL = "https://api.ciphercracker.com/"
 
 caesar1CipherText = "Ny bfx f htshjwsnsl ijajqturjsy ymfy mj htzqis'y ljy tzy tk mnx rnsi. Mj'i mfi rfsd kwnjsix ymwtzlmtzy mnx jfwqd djfwx fsi mfi ktsi rjrtwnjx tk uqfdnsl bnym ymjr, gzy mj htzqis'y zsijwxyfsi mtb ny mfi fqq xytuuji. Ymjwj bfx xtrj utnsy fx mj lwjb zu ymfy mj uqfdji bnym jfhm tk mnx kwnjsix ktw ymj ajwd qfxy ynrj, fsi mj mfi st nijf ymfy ny btzqi gj ymj qfxy."
 
