@@ -7,31 +7,48 @@ import NavBar from "../components/NavBar.js"
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import CloseButton from 'react-bootstrap/CloseButton';
+import Spinner from 'react-bootstrap/Spinner'
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export default function Home() {
 
   const [cipherText, setCipherText] = useState("");
+  const [cipherType, setCipherType] = useState("");
   const [plainText, setPlainText] = useState("");
   const [key, setKey] = useState("");
 
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const [unknownCipherType, setUnknownCipherType] = useState("");
   
   const [showSubstitutionModal, setShowSubstitutionModal] = useState(false);
   const [totalAmountPossibilities, setTotalAmountPossibilities] = useState("");
   const [intersectedMapping, setIntersectedMapping] = useState({});
   const [buttonDisabled, setbuttonDisabled] = useState(false);
-  
+
+  const [decryptLoading, setDecryptLoading] = useState(false);
+  const [fullDecipherLoading, setFullDecipherLoading] = useState(false);
+
+
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (event.target.cipherText.value === "") {
+      setErrorMessage("Ciphertext field cannot be left blank.");
+      setShowErrorModal(true);
+      return;
+    }
+
+    setDecryptLoading(true);
     
     setCipherText(event.target.cipherText.value);
-    const cipherType = event.target.cipherType.value; // useState is asynchronous
-    const apiurlFull = apiurl + cipherType;
+    setCipherType(event.target.cipherType.value);
+    const cipherTypeLocal = event.target.cipherType.value; // useState is asynchronous
+    const apiurlFull = apiurl + cipherTypeLocal;
 
-    if (cipherType === "substitution") {
+    if (cipherTypeLocal === "substitution") {
       setShowSubstitutionModal(true)
       apiurlFull += "?mode=partial"
     } else {
@@ -54,14 +71,13 @@ export default function Home() {
     const result = await res.json()
 
     setErrorMessage("")
-    setUnknownCipherType("")
     setTotalAmountPossibilities("")
     setIntersectedMapping({})
     setbuttonDisabled(false)
     
-    if (cipherType === "unknown") {
-      setUnknownCipherType(result.cipherType)
-      setPlainText(result.result.plainText)
+    if (cipherTypeLocal === "unknown") {
+      setCipherType(result.cipherType);
+      setPlainText(result.result.plainText);
 
       if (result.cipherType === "substitution") {
         setShowSubstitutionModal(true)
@@ -94,7 +110,7 @@ export default function Home() {
       } else {
         setPlainText(result.plainText)
         
-        if (cipherType === "substitution") {
+        if (cipherTypeLocal === "substitution") {
           setShowSubstitutionModal(true)
 
           let amountPossible = result.totalAmountPossibilities;
@@ -116,6 +132,8 @@ export default function Home() {
         }
       }
     }
+
+    setDecryptLoading(false)
   }
 
   function estimateResponseTime() {
@@ -145,6 +163,8 @@ export default function Home() {
   }
 
   async function handleFullSubstitutionDecipher() {
+    setFullDecipherLoading(true);
+    
     const res = await fetch(
       apiurl + 'substitution?mode=full',
       {
@@ -163,7 +183,8 @@ export default function Home() {
     setPlainText(result.plainText)
     const keyAsString = JSON.stringify(result.key)
     setKey(keyAsString)
-    setShowSubstitutionModal(false)
+    setFullDecipherLoading(false);
+    setShowSubstitutionModal(false);
   }
 
 
@@ -200,7 +221,10 @@ export default function Home() {
                 <label htmlFor="cipherText" className="form-label">Ciphertext:</label>
                 <textarea name="cipherText" id="cipherText" className="form-control" placeholder="Enter Ciphertext..." rows="9" />
               </div>
-              <button type="submit" className="btn btn-primary btn-lg">Decrypt</button>
+              <button type="submit" className="btn btn-primary btn-lg">
+                Decrypt{" "}
+                {decryptLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+              </button>
             </form>
           </div>
 
@@ -219,10 +243,10 @@ export default function Home() {
               <div className="mb-3">
                 <label htmlFor="plaintext" className="form-label">Plaintext:</label>
                 <textarea id="plaintext" className="form-control" placeholder="Please enter valid ciphertext first..." value={plainText} rows="9" readOnly/>
-              </div>
-              {unknownCipherType &&
-                <p> The plaintext for the ciphertext that you entered was encrypted using a <b> {unknownCipherType} </b> cipher. </p>
-              }       
+              </div>  
+              <p className="lead">Encryption Method: {cipherType && 
+                <b>{capitalizeFirstLetter(cipherType)} Cipher</b>}
+              </p>
             </form>
           </div>
         
@@ -248,50 +272,53 @@ export default function Home() {
           </Modal.Footer>
         </Modal>
 
-        <Modal 
-          show={showSubstitutionModal}
-          backdrop="static"
-          keyboard={false}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-        >
-          <Modal.Header>
-            <Modal.Title>Substitution Decryption Options</Modal.Title>
-            <CloseButton onClick={handlePartialSubstitutionDecipher}/>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Doing a partial substitution decipher, the decrypter tool initially found {<b>{totalAmountPossibilities}</b>} possible keys for your ciphertext. You can choose to either view the plaintext using the currently known letters from the partial decipher (with _'s in the place of the unknown letters), or do a full decipher to potentially decrypt the remaining letters. </p>
-            <p>Your estimated response time for Full Decipher: <b>{estimateResponseTime(totalAmountPossibilities)}</b></p>
-            <div class="accordion">
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                    Approximate Response Times for Full Decipher:
-                  </button>
-                </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
-                  <div class="accordion-body">
-                  <ul>
-                    <li> Less than 10 000 possible keys: ≈ 1-3 seconds</li>
-                    <li> 10 000 - 200 000 possible keys: ≈ Less than 1 minute</li>
-                    <li> 200 000 - 500 000 possible keys: ≈ Less than 3 minutes</li>
-                    <li> More than 500 000 possible keys: Too many possible keys for a full decipher</li>
-                  </ul>
+        {!decryptLoading &&
+          <Modal 
+            show={showSubstitutionModal}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+          >
+            <Modal.Header>
+              <Modal.Title>Substitution Decryption Options</Modal.Title>
+              <CloseButton onClick={handlePartialSubstitutionDecipher}/>
+            </Modal.Header>
+            <Modal.Body>
+              <p>Doing a partial substitution decipher, the decrypter tool initially found {<b>{totalAmountPossibilities}</b>} possible keys for your ciphertext. You can choose to either view the plaintext using the currently known letters from the partial decipher (with _'s in the place of the unknown letters), or do a full decipher to potentially decrypt the remaining letters. </p>
+              <p>Your estimated response time for Full Decipher: <b>{estimateResponseTime(totalAmountPossibilities)}</b></p>
+              <div className="accordion">
+                <div className="accordion-item">
+                  <h2 className="accordion-header">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                      Approximate Response Times for Full Decipher:
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                    <div className="accordion-body">
+                    <ul>
+                      <li> Less than 10 000 possible keys: ≈ 1-3 seconds</li>
+                      <li> 10 000 - 200 000 possible keys: ≈ Less than 1 minute</li>
+                      <li> 200 000 - 500 000 possible keys: ≈ Less than 3 minutes</li>
+                      <li> More than 500 000 possible keys: Too many possible keys for a full decipher</li>
+                    </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-          </Modal.Body>
-          <Modal.Footer>
-          <Button variant="primary" onClick={handlePartialSubstitutionDecipher}>
-            Partial Decipher
-          </Button>
-          <Button variant="success" onClick={handleFullSubstitutionDecipher} disabled={buttonDisabled} >
-            Full Decipher
-          </Button>
-          </Modal.Footer>
-        </Modal>
+            </Modal.Body>
+            <Modal.Footer>
+            <Button variant="primary" onClick={handlePartialSubstitutionDecipher}>
+              Partial Decipher
+            </Button>
+            <Button variant="success" onClick={handleFullSubstitutionDecipher} disabled={buttonDisabled} >
+              Full Decipher{" "}
+              {fullDecipherLoading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
+            </Button>
+            </Modal.Footer>
+          </Modal>
+        }
             
       </div>
     </div>
