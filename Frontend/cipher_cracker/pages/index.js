@@ -192,6 +192,7 @@ export default function Home() {
     <div>
       <Head>
         <title>Cipher Cracker</title>
+        <meta name="google-site-verification" content="zMQBgj0YG9C3EVsIqJ7ktmPm_UZhkNFSHfbiH00JmSc" />
       </Head>
       <div className={styles.container}>
         <NavBar/>
