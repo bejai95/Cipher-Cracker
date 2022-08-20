@@ -1,2 +1,2 @@
 # Cipher Cracker
-https://www.ciphercracker.com/
+Link to website: https://www.ciphercracker.click/
