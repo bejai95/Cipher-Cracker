@@ -1,2 +1,2 @@
-const apiurl = "https://api.ciphercracker.com/";
+const apiurl = "https://api.ciphercracker.click/";
 export default apiurl;
