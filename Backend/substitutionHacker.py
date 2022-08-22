@@ -33,11 +33,6 @@ def substitutionHackerFull(cipherText, intersectedMapping):
         "key": newKey
     }
 
-    # answer = input("To solve this substitution cipher completely, would need to try " + str(totalAmountPossibilities) + " possible keys. Type 'full' to fully decipher, or leave blank to just show what has already been worked out:\n")
-
-        
-    
-
 def getIntersectedMapping(cipherText):
     intersectedMapping = getBlankCipherletterMapping()
     
